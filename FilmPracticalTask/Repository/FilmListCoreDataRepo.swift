@@ -41,7 +41,7 @@ class PlanetListCoreDataRepositoryImpl: FilmListCoreDataRepo {
             entity.vehicles = film.vehicles as NSObject
             entity.starships = film.starships as NSObject
             entity.characters = film.characters as NSObject
-            
+
         }
         do{
             try context.save()

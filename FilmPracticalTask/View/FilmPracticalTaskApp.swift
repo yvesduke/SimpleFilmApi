@@ -9,10 +9,11 @@ import SwiftUI
 
 @main
 struct FilmPracticalTaskApp: App {
+    let persitenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: FilmListViewModel(repository: FilmRepoImplementation(networkManager: NetworkManager())))
+            ContentView(viewModel: FilmListViewModel(repository: FilmRepoImplementation(networkManager: NetworkManager())), isError: false).environment(\.managedObjectContext, persitenceController.container.viewContext)
         }
     }
 }

@@ -9,46 +9,49 @@ import SwiftUI
 
 struct FilmListDetailView: View {
     
-    let film: Result
+    let film: Result?
+    let dbFilm: FilmEntity?
     
     var body: some View {
-        
-        
+
         VStack{
             ScrollView{
-                Text(film.title .uppercased()).font(.title).foregroundColor(.blue)
+//                Text(film.title .uppercased()).font(.title).foregroundColor(.blue)
+                dbFilm?.title != nil ? Text(dbFilm?.title ?? "") : Text(film?.title ?? "")
                 Divider()
-//                AsyncImageView(url: "", userAvatar: Endpoint.imgPlaceholder2, imageWidth: 450.0, cellHeight: 490.0)
                 AsyncImageView(url: URL(string: Endpoint.imgPlaceholder3)!)
                 Divider()
                 Group{
                     
                     HStack{
                         Text("Link: ").foregroundColor(.black).bold()
-                        Text("\(film.url)").foregroundColor(.blue)
+//                        Text("\(film.url)").foregroundColor(.blue)
+                        dbFilm?.url != nil ? Text(dbFilm?.url ?? "") : Text(film?.url ?? "")
                     }
                     HStack{
                         Text("Released: ").foregroundColor(.black).bold()
-                        Text(film.releaseDate).foregroundColor(.blue)
+//                        Text(film.releaseDate).foregroundColor(.blue)
+                        dbFilm?.releaseDate != nil ? Text(dbFilm?.releaseDate ?? "") : Text(film?.releaseDate ?? "")
                     }
                     HStack{
                         Text("Director: ").foregroundColor(.black).bold()
-                        Text(film.director).foregroundColor(.blue)
+//                        Text(film.director).foregroundColor(.blue)
+                        dbFilm?.director != nil ? Text(dbFilm?.director ?? "") : Text(film?.director ?? "")
                     }
                     HStack{
                         Text("Producer: ").foregroundColor(.black).bold()
-                        Text(film.producer).foregroundColor(.blue)
+//                        Text(film.producer).foregroundColor(.blue)
+                        dbFilm?.producer != nil ? Text(dbFilm?.producer ?? "") : Text(film?.producer ?? "")
                     }
                 }
             }
         }
-        
         
     }
 }
 
 struct FilmListDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        FilmListDetailView(film: Result.MockedFilm()[0])
+        FilmListDetailView(film: Result.MockedFilm()[0], dbFilm: nil)
     }
 }

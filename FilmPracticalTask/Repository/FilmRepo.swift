@@ -25,7 +25,6 @@ extension FilmRepoImplementation: FilmRepo {
             let lists = try JSONDecoder().decode(Film.self, from: listsData )
             return lists
         }catch let error{
-            print("===================> Error \(error)")
             throw error
         }
     }

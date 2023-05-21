@@ -9,56 +9,56 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel: FilmListViewModel
-    @State var isError: Bool = false
-
+    @State var isError: Bool
+    @Environment(\.managedObjectContext) var context
+    
     var body: some View {
         NavigationStack {
             VStack {
-                if viewModel.customError != nil {
-                    ProgressView().alert(isPresented: $isError){
-                        Alert(title: Text("Oops Something Went Wrong"), message: Text(viewModel.customError?.localizedDescription ?? ""),dismissButton: .default(Text("Okay")))
-                    }
-                } else {
-                    if viewModel.filmLists.count > 0 {
-                        List(viewModel.filmLists, id: \.id) { film in
-                            NavigationLink {
-//                                EmptyView()
-                                FilmListDetailView(film: film)
-                            } label: {
-                                FilmListCellView(film: film)
-                            }
-                        }
-                    } else {
-                        EmptyView()
-                    }
-                }
-            }.toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        print("Refresh tapped!")
-                        Task{
+                
+                
+                if viewModel.filmsDb.isEmpty {
+                    ProgressView().onAppear {
+                        Task {
                             await getDataFromAPI()
                         }
-                        DispatchQueue.main.async {
-                            if(viewModel.customError != nil){
-                                isError = true
+                    }
+                    List(viewModel.filmLists, id: \.id) { film in
+                        NavigationLink{
+                            FilmListDetailView(film: film, dbFilm: nil)
+                        }label: {
+                            VStack{
+                                FilmListCellView(film: film, dbFilm: nil)
                             }
                         }
-                    } label: {
-                        Image(systemName: "arrow.clockwise")
+                    }.padding()
+                } else if viewModel.customError != nil {
+                    ProgressView().alert(isPresented: $isError){
+                        Alert(title: Text(viewModel.customError?.localizedDescription ?? "Error Occured"),message: Text("Something went wrong"),
+                              dismissButton: .default(Text("Ok")))
                     }
-                    
+                } else {
+                    List(viewModel.filmsDb) { filmDb in
+                            NavigationLink{
+                                FilmListDetailView(film: nil, dbFilm: filmDb)
+                            }label: {
+                                VStack{
+                                    FilmListCellView(film: nil, dbFilm: filmDb)
+                                }
+                        }
+                    }.padding()
                 }
-            } .navigationTitle(Text("Film List"))
-        }.task {
-            await getDataFromAPI()
-        }
-        .refreshable {
-            await getDataFromAPI()
+                
+            }.task {
+                await viewModel.getDataFromDb(context: context)
+                if viewModel.dbError != nil{
+                    isError = true
+                }
+            }
         }
     }
-    func getDataFromAPI() async{
-        await viewModel.getFilmList(urlStr: Endpoint.filmUrl)
+    func getDataFromAPI() async {
+        await viewModel.getFilmList(urlStr: Endpoint.filmUrl, context: context)
         if(viewModel.customError != nil){
             isError = true
         }
@@ -67,6 +67,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: FilmListViewModel(repository: FilmRepoImplementation(networkManager: NetworkManager())))
+        ContentView(viewModel: FilmListViewModel(repository: FilmRepoImplementation(networkManager: NetworkManager())), isError: false)
     }
 }

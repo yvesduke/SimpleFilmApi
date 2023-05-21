@@ -10,7 +10,7 @@ import Combine
 import CoreData
 
 protocol FilmListViewModelAction: ObservableObject {
-    func getFilmList(urlStr: String) async
+    func getFilmList(urlStr: String, context: NSManagedObjectContext) async
 }
 
 
@@ -19,7 +19,7 @@ final class FilmListViewModel {
     @Published private(set) var filmLists: [Result] = []
     @Published var customError: NetworkError?
     
-    @Published var planetsDb:[FilmEntity] = []
+    @Published var filmsDb:[FilmEntity] = []
     @Published var dbError: DbDataError?
     
     private var coreDataRepository: FilmListCoreDataRepo?
@@ -32,7 +32,7 @@ final class FilmListViewModel {
 
 extension FilmListViewModel: FilmListViewModelAction {
     
-    func getFilmList(urlStr: String) async {
+    func getFilmList(urlStr: String, context: NSManagedObjectContext) async {
         guard let url = URL(string: urlStr) else {
             DispatchQueue.main.async {
                 self.customError = NetworkError.invalidURL
@@ -41,6 +41,7 @@ extension FilmListViewModel: FilmListViewModelAction {
         }
         do {
             let film = try await repository.getFilm(for: url)
+            await self.saveDataIntoDB(context: context)
             DispatchQueue.main.async {
                 self.filmLists = film.results
             }
@@ -77,10 +78,10 @@ extension FilmListViewModel: FilmListViewModelAction {
     func getDataFromDb(context: NSManagedObjectContext) async {
         do {
 //            coreDataRepository = PlanetListCoreDataRepositoryImpl(context: context)
-            if let planets = try await coreDataRepository?.getPlanetListFromDb() {
+            if let films = try await coreDataRepository?.getPlanetListFromDb() {
                 print("DB retrieved successfully")
                 DispatchQueue.main.async {
-                    self.planetsDb = planets
+                    self.filmsDb = films
                     self.dbError = nil
                 }
             }
