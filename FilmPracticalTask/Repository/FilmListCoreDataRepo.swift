@@ -15,7 +15,7 @@ protocol FilmListCoreDataRepo {
 
 }
 
-class PlanetListCoreDataRepositoryImpl: FilmListCoreDataRepo {
+class FilmListCoreDataRepositoryImpl: FilmListCoreDataRepo {
 
     var context: NSManagedObjectContext
 
@@ -30,17 +30,17 @@ class PlanetListCoreDataRepositoryImpl: FilmListCoreDataRepo {
             entity.title = film.title
             entity.url = film.url
             entity.id = film.id
-            entity.species = film.species as NSObject
-            entity.planets = film.planets as NSObject
+//            entity.species = film.species as NSObject
+//            entity.planets = film.planets as NSObject
             entity.created = film.created
             entity.edited = film.edited
             entity.episodeID = Int32(film.episodeID)
             entity.openingCrawl = film.openingCrawl
             entity.producer = film.producer
             entity.releaseDate = film.releaseDate
-            entity.vehicles = film.vehicles as NSObject
-            entity.starships = film.starships as NSObject
-            entity.characters = film.characters as NSObject
+//            entity.vehicles = film.vehicles as NSObject
+//            entity.starships = film.starships as NSObject
+//            entity.characters = film.characters as NSObject
 
         }
         do{

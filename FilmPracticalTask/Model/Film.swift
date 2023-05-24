@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 
 struct Film: Codable {
@@ -39,12 +40,38 @@ struct Result: Codable {
 }
 
 extension Result {
-    static func MockedFilm() -> [Result] {
-        return[
-            Result(title: "", episodeID: 1, openingCrawl: "", director: "", producer: "", releaseDate: "", characters: [], planets: [], starships: [], vehicles: [], species: [], created: "", edited: "", url: ""),
-            Result(title: "", episodeID: 1, openingCrawl: "", director: "", producer: "", releaseDate: "", characters: [], planets: [], starships: [], vehicles: [], species: [], created: "", edited: "", url: ""),
-            Result(title: "", episodeID: 1, openingCrawl: "", director: "", producer: "", releaseDate: "", characters: [], planets: [], starships: [], vehicles: [], species: [], created: "", edited: "", url: "")
+    
+//    static func MockedFilm() -> [Result] {
+//        return[
+//            Result(title: "", episodeID: 1, openingCrawl: "", director: "", producer: "", releaseDate: "", characters: [], planets: [], starships: [], vehicles: [], species: [], created: "", edited: "", url: ""),
+//            Result(title: "", episodeID: 1, openingCrawl: "", director: "", producer: "", releaseDate: "", characters: [], planets: [], starships: [], vehicles: [], species: [], created: "", edited: "", url: ""),
+//            Result(title: "", episodeID: 1, openingCrawl: "", director: "", producer: "", releaseDate: "", characters: [], planets: [], starships: [], vehicles: [], species: [], created: "", edited: "", url: "")
+//        ]
+//    }
+    
+    static func Mockedb() -> [FilmEntity] {
+        
+        let context = NSManagedObjectContext()
+        let entity = FilmEntity(context: context)
+        entity.title = "title"
+        entity.episodeID = 1
+        entity.openingCrawl = "openingCrawl"
+        entity.director = "director"
+        entity.producer = "producter"
+        entity.releaseDate = "releasedDate"
+//        entity.characters = NSObject()
+//        entity.planets = NSObject()
+//        entity.starships = NSObject()
+//        entity.vehicles = NSObject()
+//        entity.species = NSObject()
+        entity.created = ""
+        entity.edited = ""
+        entity.url = ""
+        return [
+            FilmEntity(context: context)
         ]
     }
+    
+    
 }
 

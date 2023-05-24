@@ -13,7 +13,7 @@ struct FilmPracticalTaskApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: FilmListViewModel(repository: FilmRepoImplementation(networkManager: NetworkManager())), isError: false).environment(\.managedObjectContext, persitenceController.container.viewContext)
+            ContentView(viewModel: FilmListViewModel(repository: FilmRepoImplementation(networkManager: NetworkManager()))).environment(\.managedObjectContext, persitenceController.container.viewContext)
         }
     }
 }
