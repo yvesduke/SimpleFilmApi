@@ -41,14 +41,6 @@ struct Result: Codable {
 
 extension Result {
     
-//    static func MockedFilm() -> [Result] {
-//        return[
-//            Result(title: "", episodeID: 1, openingCrawl: "", director: "", producer: "", releaseDate: "", characters: [], planets: [], starships: [], vehicles: [], species: [], created: "", edited: "", url: ""),
-//            Result(title: "", episodeID: 1, openingCrawl: "", director: "", producer: "", releaseDate: "", characters: [], planets: [], starships: [], vehicles: [], species: [], created: "", edited: "", url: ""),
-//            Result(title: "", episodeID: 1, openingCrawl: "", director: "", producer: "", releaseDate: "", characters: [], planets: [], starships: [], vehicles: [], species: [], created: "", edited: "", url: "")
-//        ]
-//    }
-    
     static func Mockedb() -> [FilmEntity] {
         
         let context = NSManagedObjectContext()
@@ -59,11 +51,11 @@ extension Result {
         entity.director = "director"
         entity.producer = "producter"
         entity.releaseDate = "releasedDate"
-//        entity.characters = NSObject()
-//        entity.planets = NSObject()
-//        entity.starships = NSObject()
-//        entity.vehicles = NSObject()
-//        entity.species = NSObject()
+        entity.characters = NSObject()
+        entity.planets = NSObject()
+        entity.starships = NSObject()
+        entity.vehicles = NSObject()
+        entity.species = NSObject()
         entity.created = ""
         entity.edited = ""
         entity.url = ""

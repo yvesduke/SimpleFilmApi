@@ -30,6 +30,7 @@ struct FilmListDetailView: View {
                     Text("Released").foregroundColor(.blue).bold()
                     Text(dbFilm.releaseDate ?? "")
                     Text("Characters").foregroundColor(.blue).bold()
+                    CharacterView()
                 }
             }
         }.padding()

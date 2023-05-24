@@ -1,33 +1,34 @@
 //
-//  FilmViewModel.swift
+//  CharacterViewModel.swift
 //  FilmPracticalTask
 //
-//  Created by Yves Dukuze on 20/05/2023.
+//  Created by Yves Dukuze on 24/05/2023.
 //
 
 import Foundation
 import CoreData
 
-protocol FilmListViewModelAction: ObservableObject {
-    func getFilmList(urlStr: String, context: NSManagedObjectContext) async
+protocol CharacterListViewModelAction: ObservableObject {
+    func getCharacterList(urlStr: String, context: NSManagedObjectContext) async
 }
 
 
 @MainActor
-final class FilmListViewModel {
-    @Published private(set) var filmLists: [Result] = []
+final class CharacterListViewModel {
+//    @Published private(set) var characterLists: [Character] = []
+    @Published private(set) var character: Character?
     @Published var customError: NetworkError?
     
-    private let repository: FilmRepo
+    private let repository: CharacterRepo
     
-    init(repository: FilmRepo) {
+    init(repository: CharacterRepo) {
         self.repository = repository
     }
 }
 
-extension FilmListViewModel: FilmListViewModelAction {
+extension CharacterListViewModel: CharacterListViewModelAction {
     
-    func getFilmList(urlStr: String, context: NSManagedObjectContext) async {
+    func getCharacterList(urlStr: String, context: NSManagedObjectContext) async {
 
         guard let url = URL(string: urlStr) else {
             DispatchQueue.main.async {
@@ -37,9 +38,9 @@ extension FilmListViewModel: FilmListViewModelAction {
             return
         }
         do {
-            let film = try await repository.getFilm(for: url)
+            let character = try await repository.getCharacters(for: url)
             print("Data saved successfuly")
-                self.filmLists = film.results
+            self.character = character
             self.customError = nil
             await self.saveDataIntoDB(context: context)
         }catch let someError {
@@ -64,7 +65,7 @@ extension FilmListViewModel: FilmListViewModelAction {
     private func saveDataIntoDB(context:NSManagedObjectContext) async {
         let coreDataRepository = CoreDataRepositoryImpl(context: context)
         do{
-            try await coreDataRepository.saveFilmList(films: filmLists)
+            try await coreDataRepository.saveCharacterList(character: character ?? Character.MockeCharacter())
                 print("Saved to Db Successfully")
         }catch{
            print("DB Save Failed")
