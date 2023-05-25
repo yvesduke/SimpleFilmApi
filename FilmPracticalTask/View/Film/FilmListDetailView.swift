@@ -37,11 +37,10 @@ struct FilmListDetailView: View {
                     Text(dbFilm.producer ?? "")
                     Text("Released").foregroundColor(.blue).bold()
                     Text(dbFilm.releaseDate ?? "")
-                    Text("Characters").foregroundColor(.blue).bold()
-                    CharacterView(dbCharactersArray: dbCharactersArray)
                 }
             }
-        }.padding()
+            CharacterView(dbCharactersArray: dbCharactersArray)
+        }
     }
 }
 
