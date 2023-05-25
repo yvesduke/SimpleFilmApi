@@ -9,6 +9,7 @@ import Foundation
 
 protocol FilmRepo {
     func getFilm(for url: URL) async throws -> Film
+    func getCharacter(for url: URL) async throws -> Character
 }
 struct FilmRepoImplementation {
     private let networkManager: Fetchable
@@ -18,10 +19,21 @@ struct FilmRepoImplementation {
     }
 }
 extension FilmRepoImplementation: FilmRepo {
+
     func getFilm(for url: URL) async throws -> Film {
         do{
             let listsData =  try await networkManager.get(url: url)
             let lists = try JSONDecoder().decode(Film.self, from: listsData )
+            return lists
+        }catch let error{
+            throw error
+        }
+    }
+
+    func getCharacter(for url: URL) async throws -> Character {
+        do{
+            let listsData =  try await networkManager.get(url: url)
+            let lists = try JSONDecoder().decode(Character.self, from: listsData )
             return lists
         }catch let error{
             throw error

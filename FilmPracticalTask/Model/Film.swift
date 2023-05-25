@@ -51,11 +51,11 @@ extension Result {
         entity.director = "director"
         entity.producer = "producter"
         entity.releaseDate = "releasedDate"
-        entity.characters = NSObject()
-        entity.planets = NSObject()
-        entity.starships = NSObject()
-        entity.vehicles = NSObject()
-        entity.species = NSObject()
+        entity.characters = []
+        entity.planets = []
+        entity.starships = []
+        entity.vehicles = []
+        entity.species = []
         entity.created = ""
         entity.edited = ""
         entity.url = ""
@@ -63,7 +63,5 @@ extension Result {
             FilmEntity(context: context)
         ]
     }
-    
-    
 }
 

@@ -14,14 +14,14 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var context
         
     @FetchRequest(entity: FilmEntity.entity(), sortDescriptors: [])
-    var dbProductArray: FetchedResults<FilmEntity>
+    var dbfilmArray: FetchedResults<FilmEntity>
     var fetchRequest: NSFetchRequest<FilmEntity> = FilmEntity.fetchRequest()
     
     var body: some View {
         NavigationStack {
             VStack {
 
-                if dbProductArray.isEmpty {
+                if dbfilmArray.isEmpty {
                     ProgressView().onAppear {
                         Task {
                             await viewModel.getFilmList(urlStr: Endpoint.filmUrl, context: context)
@@ -29,7 +29,7 @@ struct ContentView: View {
                     }
                 } else {
                     List {
-                        ForEach(dbProductArray){ filmDb in
+                        ForEach(dbfilmArray){ filmDb in
                             NavigationLink {
                                 FilmListDetailView(dbFilm: filmDb)
                             }label: {

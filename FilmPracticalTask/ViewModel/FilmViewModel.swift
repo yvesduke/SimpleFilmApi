@@ -16,6 +16,7 @@ protocol FilmListViewModelAction: ObservableObject {
 @MainActor
 final class FilmListViewModel {
     @Published private(set) var filmLists: [Result] = []
+    @Published private(set) var characterList: [Character] = []
     @Published var customError: NetworkError?
     
     private let repository: FilmRepo
@@ -30,18 +31,37 @@ extension FilmListViewModel: FilmListViewModelAction {
     func getFilmList(urlStr: String, context: NSManagedObjectContext) async {
 
         guard let url = URL(string: urlStr) else {
-            DispatchQueue.main.async {
-                self.customError = NetworkError.invalidURL
-                print("Invalid Url")
-            }
+            self.customError = NetworkError.invalidURL
+            print("Invalid Url")
             return
         }
         do {
             let film = try await repository.getFilm(for: url)
-            print("Data saved successfuly")
-                self.filmLists = film.results
+            self.filmLists = film.results
             self.customError = nil
             await self.saveDataIntoDB(context: context)
+            print("Data saved successfuly")
+            print("=============> : \(film.results.count)")
+//            var charNumber: Int = film.results.count
+//            while(charNumber > 0) {
+//                guard let url = URL(string: Endpoint.characterurl+"\(charNumber)") else {
+//                    self.customError = NetworkError.invalidURL
+//                    print("Invalid Url")
+//                    return
+//                }
+//                do {
+//                    print("]]]]]]]]]]]]]]]]]]]]]]> URL:\(url)")
+//                    let character = try await repository.getCharacter(for: url)
+//                    self.characterList.append(character)
+//                    print("=============> Whats in Character: \(character)")
+//                } catch let charError {
+//                    print("Character error \(charError)")
+//                }
+//                charNumber -= 1
+//            }
+//            await self.saveCharacterIntoDB(context: context)
+            
+                    
         }catch let someError {
             print(someError.localizedDescription)
                 switch someError{
@@ -66,6 +86,16 @@ extension FilmListViewModel: FilmListViewModelAction {
         do{
             try await coreDataRepository.saveFilmList(films: filmLists)
                 print("Saved to Db Successfully")
+        }catch{
+           print("DB Save Failed")
+        }
+    }
+    
+    private func saveCharacterIntoDB(context:NSManagedObjectContext) async {
+        let coreDataRepository = CoreDataRepositoryImpl(context: context)
+        do{
+            try await coreDataRepository.saveCharacterList(characters: characterList)
+                print("Saved characters to Db Successfully")
         }catch{
            print("DB Save Failed")
         }

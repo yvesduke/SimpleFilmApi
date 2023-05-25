@@ -35,13 +35,12 @@ extension Character {
         
         let context = NSManagedObjectContext()
         let entity = CharacterEntity(context: context)
-        entity.films = NSObject()
-        entity.starships = NSObject()
+        entity.films = []
+        entity.starships = []
         entity.url = "character.url"
         entity.edited = "character.edited"
         entity.created = "character.created"
-        entity.species = NSObject()
-//        entity.id = ":"
+        entity.species = []
         entity.birthYear = "character.birthYear"
         entity.eyeColor = "character.eyeColor"
         entity.gender = "character.gender"

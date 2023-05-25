@@ -11,7 +11,7 @@ import CoreData
 protocol CoreDataRepo {
 
     func saveFilmList(films:[Result]) async throws
-    func saveCharacterList(character: Character) async throws
+    func saveCharacterList(characters: [Character]) async throws
 
 }
 
@@ -30,17 +30,17 @@ class CoreDataRepositoryImpl: CoreDataRepo {
             entity.title = film.title
             entity.url = film.url
             entity.id = film.id
-            entity.species = film.species as NSObject
-            entity.planets = film.planets as NSObject
+            entity.species = film.species
+            entity.planets = film.planets
             entity.created = film.created
             entity.edited = film.edited
             entity.episodeID = Int32(film.episodeID)
             entity.openingCrawl = film.openingCrawl
             entity.producer = film.producer
             entity.releaseDate = film.releaseDate
-            entity.vehicles = film.vehicles as NSObject
-            entity.starships = film.starships as NSObject
-            entity.characters = film.characters as NSObject
+            entity.vehicles = film.vehicles
+            entity.starships = film.starships
+            entity.characters = film.characters
         }
         do{
             try context.save()
@@ -50,15 +50,15 @@ class CoreDataRepositoryImpl: CoreDataRepo {
         }
     }
     
-    func saveCharacterList(character: Character) async throws {
-//        characters.forEach{ character in
+    func saveCharacterList(characters: [Character]) async throws {
+        characters.forEach{ character in
             let entity = CharacterEntity(context: context)
-            entity.films = character.films as NSObject
-            entity.starships = character.starships as NSObject
+            entity.films = character.films
+            entity.starships = character.starships
             entity.url = character.url
             entity.edited = character.edited
             entity.created = character.created
-            entity.species = character.species as NSObject
+            entity.species = character.species
             entity.id = character.id
             entity.birthYear = character.birthYear
             entity.eyeColor = character.eyeColor
@@ -69,7 +69,7 @@ class CoreDataRepositoryImpl: CoreDataRepo {
             entity.mass = character.mass
             entity.name = character.name
             entity.skinColor = character.skinColor
-//        }
+        }
         do{
             try context.save()
         }catch let error{

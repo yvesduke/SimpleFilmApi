@@ -5,7 +5,7 @@
         <attribute name="created" optional="YES" attributeType="String"/>
         <attribute name="edited" optional="YES" attributeType="String"/>
         <attribute name="eyeColor" optional="YES" attributeType="String"/>
-        <attribute name="films" optional="YES" attributeType="Transformable"/>
+        <attribute name="films" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[String]"/>
         <attribute name="gender" optional="YES" attributeType="String"/>
         <attribute name="hairColor" optional="YES" attributeType="String"/>
         <attribute name="height" optional="YES" attributeType="String"/>
@@ -14,26 +14,26 @@
         <attribute name="mass" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="skinColor" optional="YES" attributeType="String"/>
-        <attribute name="species" optional="YES" attributeType="Transformable"/>
-        <attribute name="starships" optional="YES" attributeType="Transformable"/>
+        <attribute name="species" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[String]"/>
+        <attribute name="starships" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[String]"/>
         <attribute name="url" optional="YES" attributeType="String"/>
-        <attribute name="vehicles" optional="YES" attributeType="Transformable"/>
+        <attribute name="vehicles" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[String]"/>
     </entity>
     <entity name="FilmEntity" representedClassName="FilmEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="characters" optional="YES" attributeType="Transformable"/>
+        <attribute name="characters" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[String]"/>
         <attribute name="created" optional="YES" attributeType="String"/>
         <attribute name="director" optional="YES" attributeType="String"/>
         <attribute name="edited" optional="YES" attributeType="String"/>
         <attribute name="episodeID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="openingCrawl" optional="YES" attributeType="String"/>
-        <attribute name="planets" optional="YES" attributeType="Transformable"/>
+        <attribute name="planets" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[String]"/>
         <attribute name="producer" optional="YES" attributeType="String"/>
         <attribute name="releaseDate" optional="YES" attributeType="String"/>
-        <attribute name="species" optional="YES" attributeType="Transformable"/>
-        <attribute name="starships" optional="YES" attributeType="Transformable"/>
+        <attribute name="species" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[String]"/>
+        <attribute name="starships" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[String]"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="String"/>
-        <attribute name="vehicles" optional="YES" attributeType="Transformable"/>
+        <attribute name="vehicles" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName=".[String]"/>
     </entity>
 </model>
