@@ -69,11 +69,12 @@ class CoreDataRepositoryImpl: CoreDataRepo {
             entity.mass = character.mass
             entity.name = character.name
             entity.skinColor = character.skinColor
+            entity.vehicles = character.vehicles
         }
         do{
             try context.save()
         }catch let error{
-            print(error.localizedDescription)
+            print("-------------> char saving to DB\(error.localizedDescription)")
             throw DbDataError.savingError
         }
     }

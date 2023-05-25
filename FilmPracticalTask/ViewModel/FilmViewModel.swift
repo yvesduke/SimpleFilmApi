@@ -41,25 +41,23 @@ extension FilmListViewModel: FilmListViewModelAction {
             self.customError = nil
             await self.saveDataIntoDB(context: context)
             print("Data saved successfuly")
-            print("=============> : \(film.results.count)")
-//            var charNumber: Int = film.results.count
-//            while(charNumber > 0) {
-//                guard let url = URL(string: Endpoint.characterurl+"\(charNumber)") else {
-//                    self.customError = NetworkError.invalidURL
-//                    print("Invalid Url")
-//                    return
-//                }
-//                do {
-//                    print("]]]]]]]]]]]]]]]]]]]]]]> URL:\(url)")
-//                    let character = try await repository.getCharacter(for: url)
-//                    self.characterList.append(character)
-//                    print("=============> Whats in Character: \(character)")
-//                } catch let charError {
-//                    print("Character error \(charError)")
-//                }
-//                charNumber -= 1
-//            }
-//            await self.saveCharacterIntoDB(context: context)
+//            print("=============> : \(film.results.count)")
+            var charNumber: Int = film.results.count
+            while(charNumber > 0) {
+                guard let url = URL(string: Endpoint.characterurl+"\(charNumber)") else {
+                    self.customError = NetworkError.invalidURL
+                    print("Invalid Url")
+                    return
+                }
+                do {
+                    let character = try await repository.getCharacter(for: url)
+                    self.characterList.append(character)
+                } catch let charError {
+                    print("Character error \(charError)")
+                }
+                charNumber -= 1
+            }
+            await self.saveCharacterIntoDB(context: context)
             
                     
         }catch let someError {
@@ -97,7 +95,7 @@ extension FilmListViewModel: FilmListViewModelAction {
             try await coreDataRepository.saveCharacterList(characters: characterList)
                 print("Saved characters to Db Successfully")
         }catch{
-           print("DB Save Failed")
+           print("saving Character to Db failed DB Save Failed")
         }
     }
 }

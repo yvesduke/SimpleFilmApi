@@ -10,14 +10,13 @@ import CoreData
 
 struct FilmListDetailView: View {
     
-//    let film: Result?
     let dbFilm: FilmEntity
     
-//    @Environment(\.managedObjectContext) var context
-//
-//    @FetchRequest(entity: CharacterEntity.entity(), sortDescriptors: [])
-//    var dbCharactersArray: FetchedResults<CharacterEntity>
-//    var fetchRequest: NSFetchRequest<CharacterEntity> = CharacterEntity.fetchRequest()
+    @Environment(\.managedObjectContext) var context
+
+    @FetchRequest(entity: CharacterEntity.entity(), sortDescriptors: [])
+    var dbCharactersArray: FetchedResults<CharacterEntity>
+    var fetchRequest: NSFetchRequest<CharacterEntity> = CharacterEntity.fetchRequest()
     
     var body: some View {
 
@@ -39,22 +38,7 @@ struct FilmListDetailView: View {
                     Text("Released").foregroundColor(.blue).bold()
                     Text(dbFilm.releaseDate ?? "")
                     Text("Characters").foregroundColor(.blue).bold()
-//                    CharacterView(characters: Character.MockeCharacter())
-                    
-//                    List {
-//                        ForEach(dbCharactersArray){ characterDb in
-//                            NavigationLink {
-//                                EmptyView()
-//                            }label: {
-//                                VStack{
-////                                    FilmListCellView(dbFilm: characterDb)
-//                                    Text(characterDb.name ?? "Character Name")
-//                                }
-//                            }
-//                        }
-//                    }
-                    
-                    
+                    CharacterView(dbCharactersArray: dbCharactersArray)
                 }
             }
         }.padding()
